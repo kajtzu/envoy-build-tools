@@ -1,0 +1,12 @@
+FROM almalinux:9 as base
+
+COPY ./build_container_common.sh /
+COPY ./build_container_centos.sh /
+
+ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+RUN mkdir /etc/sudoers.d
+RUN echo "Defaults    secure_path = $PATH" > /etc/sudoers.d/path
+
+RUN ./build_container_centos.sh
+ENV LC_ALL en_US.UTF-8
